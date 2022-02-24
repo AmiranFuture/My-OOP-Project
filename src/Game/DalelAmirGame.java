@@ -20,6 +20,8 @@ public class DalelAmirGame extends JFrame {
     private static float drop_x;
     private static float drop_v = 230;
     private static int score = 0;
+    private static float restart_x = 525;
+    private static float restart_y = 475;
 
 
 
@@ -49,7 +51,17 @@ public class DalelAmirGame extends JFrame {
                     drop_x = (int) (Math.random()*(game_field.getWidth()- My_Face.getHeight(null)));
                     game_window.setTitle("Record: " +score);
                     score++;
+                    drop_v = drop_v+30;
 
+                }
+                float restart_x_left = restart_x + restart.getWidth(null);
+                float restart_y_bottom = restart_y + restart.getHeight(null);
+                boolean is_restart = x>=restart_x && x<=restart_x_left && y>=restart_y && y<=restart_y_bottom;
+                if (is_restart){
+                    drop_y = -100;
+                    drop_x = (int) (Math.random()*(game_field.getWidth() - My_Face.getHeight(null)));
+                    score = 0; drop_v = 200;
+                    game_window.setTitle("Record: " +score);
                 }
 
             }
@@ -67,7 +79,7 @@ public class DalelAmirGame extends JFrame {
         g.drawImage(My_Face, (int)drop_x, (int)drop_y, null);
         if(drop_y > game_window.getHeight()){
             g.drawImage(game_over, 400, 150, null);
-            g.drawImage(restart, 525, 470, null);
+            g.drawImage(restart,(int) restart_x,(int) restart_y, null);
         }
 
 
