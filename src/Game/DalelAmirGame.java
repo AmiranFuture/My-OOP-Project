@@ -24,13 +24,14 @@ public class DalelAmirGame extends JFrame {
         background = ImageIO.read(DalelAmirGame.class.getResourceAsStream("background.jpg")); //give background for window
         My_Face = ImageIO.read(DalelAmirGame.class.getResourceAsStream("My_Face.png"));
         game_over = ImageIO.read(DalelAmirGame.class.getResourceAsStream("game_over.png"));
+        restart = ImageIO.read(DalelAmirGame.class.getResourceAsStream("restart.png"));
         game_window = new DalelAmirGame();
-        game_window.setSize(1400, 980); //give size of window
+        game_window.setSize(1200, 750); //give size of window
         game_window.setResizable(false); // cant change size of window
         frame_time = System.nanoTime();
         game_window.setTitle("70% please"); // add title of the top of window
         game_window.setDefaultCloseOperation(EXIT_ON_CLOSE); // for closing the window
-        game_window.setLocation(0, 0); // add place of appearance of the window
+        game_window.setLocation(100, 0); // add place of appearance of the window
         GameField game_field = new GameField();
         game_window.add(game_field);
         game_window.setVisible(true); // to make window visible
@@ -41,8 +42,12 @@ public class DalelAmirGame extends JFrame {
         long current_time = System.nanoTime();
         float delta_time = (current_time-frame_time)*0.000000001f;
         frame_time = current_time;
-        drop_y = drop_y*drop_v*delta_time;
+        drop_y = drop_y + drop_v * delta_time;
         g.drawImage(My_Face, (int)drop_x, (int)drop_y, null);
+        if(drop_y > game_window.getHeight()){
+            g.drawImage(game_over, 400, 150, null);
+            g.drawImage(restart, 525, 470, null);
+        }
 
 
     }
