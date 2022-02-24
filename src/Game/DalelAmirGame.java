@@ -3,6 +3,8 @@ package Game;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class DalelAmirGame extends JFrame {
@@ -14,9 +16,10 @@ public class DalelAmirGame extends JFrame {
     private static Image game_over;
 
     private static long frame_time;
-    private static float drop_y;
+    private static float drop_y = -150;
     private static float drop_x;
     private static float drop_v = 230;
+    private static int score = 0;
 
 
 
@@ -33,6 +36,24 @@ public class DalelAmirGame extends JFrame {
         game_window.setDefaultCloseOperation(EXIT_ON_CLOSE); // for closing the window
         game_window.setLocation(100, 0); // add place of appearance of the window
         GameField game_field = new GameField();
+        game_field.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                float drop_x_right = drop_x + My_Face.getWidth(null);
+                float drop_t_bottom = drop_y + My_Face.getHeight(null);
+                boolean is_drop = x>=drop_x && x<=drop_x_right && y>=drop_y && y<=drop_t_bottom;
+                if (is_drop){
+                    drop_y = -100;
+                    drop_x = (int) (Math.random()*(game_field.getWidth()- My_Face.getHeight(null)));
+                    game_window.setTitle("Record: " +score);
+                    score++;
+
+                }
+
+            }
+        });
         game_window.add(game_field);
         game_window.setVisible(true); // to make window visible
 
