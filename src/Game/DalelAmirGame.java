@@ -31,6 +31,14 @@ public class DalelAmirGame extends JFrame {
         game_over = ImageIO.read(DalelAmirGame.class.getResourceAsStream("game_over.png"));
         restart = ImageIO.read(DalelAmirGame.class.getResourceAsStream("restart.png"));
         game_window = new DalelAmirGame();
+        JLabel record = new JLabel("Record: " +score);
+
+        record.setSize(228, 150);
+        record.setPreferredSize(new Dimension(100, 50));
+        record.setFont(new Font("Record: " +score, Font.PLAIN , 19));
+        record.setOpaque(true);
+        record.setBackground(Color.RED);
+
         game_window.setSize(1200, 750); //give size of window
         game_window.setResizable(false); // cant change size of window
         frame_time = System.nanoTime();
@@ -50,9 +58,15 @@ public class DalelAmirGame extends JFrame {
                     drop_y = -100;
                     drop_x = (int) (Math.random()*(game_field.getWidth()- My_Face.getHeight(null)));
                     game_window.setTitle("Record: " +score);
+                    record.setText("Record: " +score);
                     score++;
                     drop_v = drop_v+30;
 
+                }
+                    else if (is_drop == false){
+                        if (score<=0){
+                            score--;
+                        }
                 }
                 float restart_x_left = restart_x + restart.getWidth(null);
                 float restart_y_bottom = restart_y + restart.getHeight(null);
@@ -62,12 +76,15 @@ public class DalelAmirGame extends JFrame {
                     drop_x = (int) (Math.random()*(game_field.getWidth() - My_Face.getHeight(null)));
                     score = 0; drop_v = 200;
                     game_window.setTitle("Record: " +score);
+                    record.setText("Record: " +score);
                 }
 
             }
         });
         game_window.add(game_field);
+        game_field.add(record);
         game_window.setVisible(true); // to make window visible
+
 
     }
     public static void Repaint(Graphics g){ //method for drawing in window
